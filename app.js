@@ -7,6 +7,9 @@ const path = require('path');
 const methodOverride = require('method-override');
 const Listing = require('./models/listing');
 const wrapAsync = require('./utils/wrapasync');
+const expressError = require('./utils/expresserror');
+const { listingSchema } = require('./schema');
+
 
 // Configure EJS-mate layout engine for templating.
 app.engine('ejs', engine);
@@ -42,6 +45,19 @@ app.get('/', (req, res) => {
     res.redirect('/listings');
 });
 
+
+//validation middleware to check incoming listing data against Joi schema.
+const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(', ');
+        throw new expressError(msg, 400);
+    } else {
+        next();
+    }
+};
+
+
 // Index route: fetch all listings and render listing grid page.
 app.get('/listings', wrapAsync(async (req, res) => {
     const listings = await Listing.find({});
@@ -61,7 +77,7 @@ app.get('/listings/:id/edit', wrapAsync(async (req, res) => {
 
     // Return 404 if ID exists in format but no document is found.
     if (!listing) {
-        return res.status(404).send('Listing not found');
+        throw new expressError('Listing not found', 404);
     }
 
     res.render('edit', {
@@ -69,8 +85,10 @@ app.get('/listings/:id/edit', wrapAsync(async (req, res) => {
         navAction: `<a class="create-btn" href="/listings/${listing._id}">Back to Property</a>`
     });
 }));
+
+
 // Create route: receive form data, save listing, then open its show page.
-app.post('/listings', wrapAsync(async (req, res) => {
+app.post('/listings', validateListing, wrapAsync(async (req, res) => {
     // Form fields are posted as listing[title], listing[price], etc.
     const listingData = req.body.listing || {};
     const listing = new Listing(listingData);
@@ -81,7 +99,7 @@ app.post('/listings', wrapAsync(async (req, res) => {
 }));
 
 // Update route: receive edited form data and update existing listing.
-app.put('/listings/:id', wrapAsync(async (req, res) => {
+app.put('/listings/:id', validateListing, wrapAsync(async (req, res) => {
     const listingData = req.body.listing || {};
     const updatedListing = await Listing.findByIdAndUpdate(
         req.params.id,
@@ -139,10 +157,15 @@ app.get('/listings/:id', wrapAsync(async (req, res) => {
 //         res.status(500).json({ error: 'Internal Server Error' });
 //     }
 // });
+app.use((req, res, next) => {
+    next(new expressError('Page Not Found', 404));
+});
+
+// Global error handler: catch all errors and send status code + message.
 
 app.use((err, req, res, next) => {
-    console.error('Unhandled error:', err);
-    res.status(500).send('An unexpected error occurred. Please try again later.');
+    const { statusCode = 500, message = 'Something went wrong. Please try again.' } = err;
+    res.status(statusCode).render('error', { statusCode, message, navAction: null });
 });
 
 app.listen(8080, () => {

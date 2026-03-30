@@ -1,0 +1,21 @@
+<% layout('boilerplate') %>
+<% pageTitle = (typeof statusCode !== 'undefined' ? statusCode : 500) + ' | WanderLust' %>
+<% pageStyle = 'listings.css' %>
+<%
+	const code = typeof statusCode !== 'undefined' ? statusCode : 500;
+	const errMsg = message || 'Something went wrong. Please try again.';
+	navAction = '<a class="create-btn" href="/listings">Back to Listings</a>';
+%>
+
+<section class="hero">
+	<h1>Error <%= code %></h1>
+	<p>We could not complete your request.</p>
+	<span class="count-pill">WanderLust</span>
+</section>
+
+<main class="grid-wrap">
+	<div class="empty-state">
+		<h2><%= errMsg %></h2>
+		<p>If this keeps happening, refresh the page or return to the listings page.</p>
+	</div>
+</main>
