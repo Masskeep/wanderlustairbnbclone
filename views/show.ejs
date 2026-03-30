@@ -1,0 +1,64 @@
+<% layout('boilerplate') %>
+<% pageTitle = listing.title + ' | WanderLust' %>
+<% pageStyle = 'show.css' %>
+
+<!-- Main property detail layout -->
+  <main class="show-wrap">
+    <!-- Property heading/meta -->
+    <section class="property-head">
+      <p class="eyebrow">Entire place in <%= listing.location %></p>
+      <h1><%= listing.title %></h1>
+      <p class="meta"><%= listing.location %>, <%= listing.country %></p>
+    </section>
+
+    <!-- Gallery section: one hero image + thumbnail grid -->
+    <section class="gallery-grid">
+      <div class="hero-image">
+        <!-- Use first image as main hero image -->
+        <img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+      </div>
+
+      <div class="thumb-col">
+        <!-- If more images exist, show up to 4 thumbnails -->
+        <% if (listing.images && listing.images.length > 1) { %>
+          <% listing.images.slice(1, 5).forEach((img) => { %>
+            <img src="<%= img %>" alt="<%= listing.title %>" />
+          <% }) %>
+        <% } else { %>
+          <!-- If only one image exists, repeat it to keep layout balanced -->
+          <img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+          <img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+          <img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+          <img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+        <% } %>
+      </div>
+    </section>
+
+    <!-- Two-column content: description + booking card -->
+    <section class="property-content">
+      <article class="details-card">
+        <h2>About this place</h2>
+        <p><%= listing.description %></p>
+      </article>
+
+      <!-- Right panel with price and booking CTA -->
+      <aside class="booking-card">
+        <p class="price">₹ <%= Number(listing.price).toLocaleString('en-IN') %> <span>/ night</span></p>
+        <button type="button">Reserve</button>
+        <p class="note">You won't be charged yet</p>
+        <ul>
+          <li>Free cancellation for 48 hours</li>
+          <li>Instant host support</li>
+          <li>Trusted WanderLust stay</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- Delete section at bottom -->
+    <section class="delete-section">
+      <form class="delete-form" action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button class="delete-btn" type="submit">Delete Property</button>
+      </form>
+    </section>
+  </main>

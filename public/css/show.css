@@ -1,0 +1,318 @@
+/* Theme variables for property detail page. */
+:root {
+  --cream: #f8f5ef;
+  --sand: #efe6d7;
+  --ink: #1f1f1f;
+  --muted: #66635f;
+  --brand: #ff385c;
+  --card: #ffffff;
+}
+
+* {
+  /* Include border/padding in final element dimensions. */
+  box-sizing: border-box;
+}
+
+/* Global body styling and background texture. */
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, #fff8eb 0, transparent 40%),
+    radial-gradient(circle at 90% 0%, #ffe9ed 0, transparent 35%),
+    linear-gradient(180deg, var(--cream), #fbfaf8 35%, #f7f2e7 100%);
+}
+
+/* Sticky top header with glass effect. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+  background: rgba(248, 245, 239, 0.9);
+  border-bottom: 1px solid #e8decf;
+}
+
+/* Header content alignment container. */
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand styles. */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.brand-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 14px;
+}
+
+.back-link {
+  /* Back link to return to listings page. */
+  color: #292725;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.edit-link {
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* Main show page wrapper. */
+.show-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px 56px;
+}
+
+.property-head {
+  animation: rise 700ms ease-out;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
+
+.property-head h1 {
+  margin: 8px 0 4px;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+}
+
+.meta {
+  margin: 0;
+  font-weight: 600;
+}
+
+.gallery-grid {
+  /* Desktop: large hero image + right thumbnail column. */
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.thumb-col img {
+  width: 100%;
+  height: 204px;
+  object-fit: cover;
+  display: block;
+}
+
+.property-content {
+  /* Two-column content area: description and booking card. */
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 2fr minmax(260px, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.details-card,
+.booking-card {
+  background: var(--card);
+  border: 1px solid #ecdfcf;
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(25, 21, 14, 0.06);
+}
+
+.details-card {
+  padding: 24px;
+}
+
+.details-card h2 {
+  margin-top: 0;
+}
+
+.details-card p {
+  margin-bottom: 0;
+  line-height: 1.7;
+  color: #37332e;
+}
+
+.booking-card {
+  /* Keep booking panel visible while scrolling on desktop. */
+  position: sticky;
+  top: 88px;
+  padding: 20px;
+}
+
+.price {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+}
+
+.price span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.booking-card button {
+  /* Booking action button style. */
+  margin-top: 18px;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 14px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: white;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  cursor: pointer;
+}
+
+.note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.booking-card ul {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  color: #4b4640;
+  display: grid;
+  gap: 8px;
+}
+
+.delete-section {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid #ecdfcf;
+}
+
+.delete-form {
+  display: flex;
+}
+
+.delete-btn {
+  
+  border: 2px solid #d84545;
+  color: #d84545;
+  background: transparent;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.delete-btn:hover {
+  color: #fff;
+  background: #d84545;
+  box-shadow: 0 6px 14px rgba(216, 69, 69, 0.28);
+  transform: translateY(-1px);
+}
+
+/* Reveal animation for heading area. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  /* Tablet/mobile: stack gallery and content into one column. */
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb-col {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-image img,
+  .thumb-col img {
+    height: 240px;
+  }
+
+  .property-content {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-card {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Compact spacing + image height on small phones. */
+  .topbar-inner,
+  .show-wrap {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .hero-image img,
+  .thumb-col img {
+    height: 190px;
+  }
+
+  .top-actions {
+    gap: 8px;
+  }
+
+  .edit-link,
+  .back-link {
+    font-size: 0.8rem;
+  }
+
+  .delete-btn {
+    width: 100%;
+  }
+}

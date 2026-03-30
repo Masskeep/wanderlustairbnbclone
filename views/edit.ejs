@@ -1,0 +1,60 @@
+<% layout('boilerplate') %>
+<% pageTitle = 'Edit Listing | WanderLust' %>
+<% pageStyle = 'listings.css' %>
+
+<!-- Intro section for edit page -->
+	<section class="hero">
+		<h1>Edit Listing</h1>
+		<p>Update property information and save your changes.</p>
+		<span class="count-pill">Host dashboard</span>
+	</section>
+
+	<!-- Edit form container -->
+	<main class="grid-wrap">
+		<section class="form-shell">
+			<!-- Form submits to update route for this listing -->
+			<form class="listing-form" action="/listings/<%= listing._id %>?_method=PUT" method="POST">
+				<!-- HTML forms support GET/POST only, so we override to PUT -->
+				<input type="hidden" name="_method" value="PUT" />
+				<div class="form-row">
+					<label for="title">Title</label>
+					<input id="title" name="listing[title]" type="text" value="<%= listing.title %>" required />
+				</div>
+
+				<div class="form-row">
+					<label for="description">Description</label>
+					<textarea id="description" name="listing[description]" rows="5" required><%= listing.description %></textarea>
+				</div>
+
+				<div class="form-row split">
+					<div>
+						<label for="image">Image Link</label>
+						<input
+							id="image"
+							name="listing[images]"
+							type="url"
+							value="<%= listing.images && listing.images.length ? listing.images.join(', ') : '' %>"
+							required
+						/>
+					</div>
+					<div>
+						<label for="price">Price (per night)</label>
+						<input id="price" name="listing[price]" type="number" min="1" value="<%= listing.price %>" required />
+					</div>
+				</div>
+
+				<div class="form-row split">
+					<div>
+						<label for="location">Location / City</label>
+						<input id="location" name="listing[location]" type="text" value="<%= listing.location %>" required />
+					</div>
+					<div>
+						<label for="country">Country Name</label>
+						<input id="country" name="listing[country]" type="text" value="<%= listing.country %>" required />
+					</div>
+				</div>
+
+				<button class="submit-btn" type="submit">Save Changes</button>
+			</form>
+		</section>
+	</main>

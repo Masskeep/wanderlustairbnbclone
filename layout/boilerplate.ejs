@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Basic page metadata + stylesheet/font includes -->
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- Page-specific title (set via pageTitle variable) -->
+	<title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'WanderLust' %></title>
+	
+	<!-- Font preloads -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+	
+	<!-- Page-specific stylesheet (set via pageStyle variable) -->
+	<% if (typeof pageStyle !== 'undefined') { %>
+		<link rel="stylesheet" href="/css/<%= pageStyle %>" />
+	<% } else { %>
+		<link rel="stylesheet" href="/css/listings.css" />
+	<% } %>
+</head>
+<body>
+	<!-- Shared header present on all pages -->
+	<header class="topbar">
+		<div class="topbar-inner">
+			<!-- Brand identity block -->
+			<div class="brand">
+				<div class="brand-badge">W</div>
+				<span>WanderLust</span>
+			</div>
+
+			<!-- Right side actions in top bar (page-specific content from yield) -->
+			<div class="topbar-actions">
+				<span>Airbnb Clone</span>
+				<% if (navAction) { %>
+					<%- navAction %>
+				<% } else { %>
+					<a class="create-btn" href="/listings/new">Create New Listing</a>
+				<% } %>
+			</div>
+		</div>
+	</header>
+
+	<!-- Page-specific content goes here -->
+	<%- body %>
+
+	<!-- Shared client-side behaviors (validation, small UI helpers). -->
+	<script src="/js/script.js"></script>
+</body>
+</html>

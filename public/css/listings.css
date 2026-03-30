@@ -1,0 +1,353 @@
+/* Shared color tokens for listings + create page theme. */
+:root {
+  --cream: #f8f5ef;
+  --sand: #efe6d7;
+  --ink: #1f1f1f;
+  --muted: #66635f;
+  --brand: #ff385c;
+  --card: #ffffff;
+  --ring: rgba(255, 56, 92, 0.18);
+}
+
+* {
+  /* Include padding and border inside declared element width/height. */
+  box-sizing: border-box;
+}
+
+/* Page-level background and typography. */
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, #fff8eb 0, transparent 40%),
+    radial-gradient(circle at 90% 0%, #ffe9ed 0, transparent 35%),
+    linear-gradient(180deg, var(--cream), #fbfaf8 35%, #f7f2e7 100%);
+}
+
+/* Sticky top navigation bar. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+  background: rgba(248, 245, 239, 0.9);
+  border-bottom: 1px solid #e8decf;
+}
+
+/* Inner layout wrapper for header content. */
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand logo + text styles. */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: var(--brand);
+}
+
+/* Right side content in top bar (text + action button). */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Reusable CTA button style used in top bar. */
+.create-btn {
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 16px rgba(255, 56, 92, 0.22);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.create-btn:hover {
+  /* Slight lift on hover for better feedback. */
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(255, 56, 92, 0.28);
+}
+
+/* Small gradient badge containing W letter. */
+.brand-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 14px;
+}
+
+/* Intro hero section on page top. */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+  animation: rise 700ms ease-out;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+}
+
+.hero p {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.count-pill {
+  /* Small info badge, used for count/status text. */
+  margin-top: 14px;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #ebdfce;
+  font-size: 0.9rem;
+}
+
+/* Shared content wrapper below hero. */
+.grid-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px 42px;
+}
+
+/* Responsive card grid for listings. */
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Listing card visual style. */
+.card {
+  background: var(--card);
+  border: 1px solid #ecdfcf;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(25, 21, 14, 0.06);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  animation: reveal 500ms ease both;
+}
+
+.card:hover {
+  /* Lift card to indicate it is interactive. */
+  transform: translateY(-6px);
+  box-shadow: 0 18px 30px rgba(25, 21, 14, 0.12);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-body {
+  padding: 14px;
+}
+
+.card-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.card-location {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card-price {
+  margin: 10px 0 0;
+  font-weight: 700;
+}
+
+.empty-state {
+  /* Placeholder block shown when no listings exist. */
+  background: #fff;
+  border: 1px dashed #ddcdb6;
+  padding: 28px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+/* Form wrapper used by new listing page. */
+.form-shell {
+  max-width: 860px;
+}
+
+/* Main create-listing form card. */
+.listing-form {
+  background: #fff;
+  border: 1px solid #ecdfcf;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 22px rgba(25, 21, 14, 0.06);
+  display: grid;
+  gap: 16px;
+  animation: reveal 500ms ease both;
+}
+
+/* Each label+input group. */
+.form-row {
+  display: grid;
+  gap: 8px;
+}
+
+.form-row label {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.form-row input,
+.form-row textarea {
+  /* Input baseline style matching app theme. */
+  width: 100%;
+  border: 1px solid #e6d9c8;
+  border-radius: 12px;
+  padding: 12px 13px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #fffdfa;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  /* Highlight focused field for accessibility. */
+  outline: none;
+  border-color: #ff8aa1;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* Invalid input style applied by public/js/script.js. */
+.form-row input.is-invalid,
+.form-row textarea.is-invalid,
+.form-row select.is-invalid {
+  border-color: #db3553;
+  box-shadow: 0 0 0 4px rgba(219, 53, 83, 0.12);
+  background: #fff7f8;
+}
+
+/* Inline validation message shown under each invalid field. */
+.validation-error {
+  margin: 6px 2px 0;
+  min-height: 1.1em;
+  color: #b4233c;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.form-row textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-row.split {
+  /* Two columns on desktop, stacked on mobile in media query. */
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Submit button for create listing form. */
+.submit-btn {
+  justify-self: start;
+  border: 0;
+  color: #fff;
+  background: linear-gradient(135deg, #ff385c, #ff7a59);
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(255, 56, 92, 0.22);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.submit-btn:hover {
+  /* Hover motion for button feedback. */
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(255, 56, 92, 0.28);
+}
+
+/* Entry animation used by hero and cards/forms. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Reduce horizontal padding and simplify header on small screens. */
+  .topbar-inner,
+  .hero,
+  .grid-wrap {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card img {
+    height: 200px;
+  }
+
+  .form-row.split {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .listing-form {
+    padding: 16px;
+  }
+
+  .topbar-actions span {
+    display: none;
+  }
+
+  .create-btn {
+    padding: 9px 12px;
+    font-size: 0.82rem;
+  }
+}

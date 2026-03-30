@@ -1,0 +1,40 @@
+<% layout('boilerplate') %>
+<% pageTitle = 'WanderLust Listings' %>
+<% pageStyle = 'listings.css' %>
+
+<!-- Hero section with dynamic listing count -->
+<section class="hero">
+		<h1>Find your next stay</h1>
+		<p>Live listings pulled directly from your MongoDB database.</p>
+		<span class="count-pill"><%= listings.length %> places available</span>
+	</section>
+
+	<!-- Main content: either empty-state or card grid -->
+	<main class="grid-wrap">
+		<!-- EJS conditional: show this block when no listings exist -->
+		<% if (listings.length === 0) { %>
+			<div class="empty-state">
+				<h2>No listings found</h2>
+				<p>Seed your database to start seeing properties here.</p>
+			</div>
+		<% } else { %>
+			<!-- EJS loop: one card per listing -->
+			<section class="listing-grid">
+				<% listings.forEach((listing) => { %>
+					<!-- Clicking a card opens that listing's detail page -->
+					<a class="card-link" href="/listings/<%= listing._id %>">
+						<article class="card">
+							<!-- Use first image if available, else use fallback image -->
+							<img src="<%= listing.images && listing.images.length ? listing.images[0] : 'https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=1167&auto=format&fit=crop' %>" alt="<%= listing.title %>" />
+							<div class="card-body">
+								<!-- Dynamic listing data from MongoDB -->
+								<h2 class="card-title"><%= listing.title %></h2>
+								<p class="card-location"><%= listing.location %>, <%= listing.country %></p>
+								<p class="card-price">₹ <%= Number(listing.price).toLocaleString('en-IN') %> / night</p>
+							</div>
+						</article>
+					</a>
+				<% }) %>
+			</section>
+		<% } %>
+	</main>
