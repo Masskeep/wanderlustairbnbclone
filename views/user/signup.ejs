@@ -1,0 +1,36 @@
+<% layout('boilerplate') %>
+<% pageTitle = 'Sign Up | WanderLust' %>
+<% pageStyle = 'listings.css' %>
+
+<section class="hero">
+	<h1>Create Your WanderLust Account</h1>
+	<p>Join the community and start managing your trips and stays.</p>
+	<span class="count-pill">Welcome onboard</span>
+</section>
+
+<main class="grid-wrap">
+	<section class="form-shell">
+		<form class="listing-form" action="/signup" method="POST">
+			<div class="form-row">
+				<label for="username">Username</label>
+				<input id="username" name="username" type="text" placeholder="traveler_01" required />
+			</div>
+
+			<div class="form-row">
+				<label for="email">Email</label>
+				<input id="email" name="email" type="email" placeholder="you@example.com" required />
+			</div>
+
+			<div class="form-row">
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" minlength="6" placeholder="Minimum 6 characters" required />
+			</div>
+
+			<button class="submit-btn" type="submit">Create Account</button>
+		</form>
+		<div class="auth-switch">
+			<span>Already have an account?</span>
+			<a class="ghost-btn" href="/login">Log In</a>
+		</div>
+	</section>
+</main>

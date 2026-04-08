@@ -5,10 +5,45 @@ const mongoose = require('mongoose');
 const engine = require('ejs-mate');
 const path = require('path');
 const methodOverride = require('method-override');
-const Listing = require('./models/listing');
 const wrapAsync = require('./utils/wrapasync');
 const expressError = require('./utils/expresserror');
-const { listingSchema } = require('./schema');
+const listingRouter = require('./routes/listing');
+const reviewRouter = require('./routes/review');
+const expressSession = require('express-session');
+const connectflash = require('connect-flash');
+const localPassport = require('passport-local');
+const User = require('./models/user');
+const passport = require('passport');
+const { setCurrentUser } = require('./middleware');
+
+const userRouter = require('./routes/user');
+
+// Configure Passport.js for user authentication.
+
+// Configure session management for flash messages and user sessions.
+app.use(expressSession({
+    secret: 'wanderlustsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localPassport(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(connectflash());
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});
+app.use(setCurrentUser);
 
 
 // Configure EJS-mate layout engine for templating.
@@ -45,101 +80,12 @@ app.get('/', (req, res) => {
     res.redirect('/listings');
 });
 
+// Mount listing routes.
+app.use('/listings', listingRouter);
 
-//validation middleware to check incoming listing data against Joi schema.
-const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(', ');
-        throw new expressError(msg, 400);
-    } else {
-        next();
-    }
-};
-
-
-// Index route: fetch all listings and render listing grid page.
-app.get('/listings', wrapAsync(async (req, res) => {
-    const listings = await Listing.find({});
-    res.render('listings', { listings, navAction: null });
-}));
-
-// New route: show form for creating a listing.
-app.get('/listings/new', (req, res) => {
-    res.render('new', {
-        navAction: '<a class="create-btn" href="/listings">Back to Listings</a>'
-    });
-});
-
-// Edit route: show form for editing a listing.
-app.get('/listings/:id/edit', wrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
-
-    // Return 404 if ID exists in format but no document is found.
-    if (!listing) {
-        throw new expressError('Listing not found', 404);
-    }
-
-    res.render('edit', {
-        listing,
-        navAction: `<a class="create-btn" href="/listings/${listing._id}">Back to Property</a>`
-    });
-}));
-
-
-// Create route: receive form data, save listing, then open its show page.
-app.post('/listings', validateListing, wrapAsync(async (req, res) => {
-    // Form fields are posted as listing[title], listing[price], etc.
-    const listingData = req.body.listing || {};
-    const listing = new Listing(listingData);
-    await listing.save();
-
-    // Redirect to the details page of the newly created listing.
-    res.redirect(`/listings/${listing._id}`);
-}));
-
-// Update route: receive edited form data and update existing listing.
-app.put('/listings/:id', validateListing, wrapAsync(async (req, res) => {
-    const listingData = req.body.listing || {};
-    const updatedListing = await Listing.findByIdAndUpdate(
-        req.params.id,
-        listingData,
-        { runValidators: true, new: true }
-    );
-
-    if (!updatedListing) {
-        return res.status(404).send('Listing not found');
-    }
-
-    res.redirect(`/listings/${updatedListing._id}`);
-}));
-
-// Delete route: remove a listing by ID and redirect to listings.
-app.delete('/listings/:id', wrapAsync(async (req, res) => {
-    const deletedListing = await Listing.findByIdAndDelete(req.params.id);
-
-    if (!deletedListing) {
-        return res.status(404).send('Listing not found');
-    }
-
-    // Redirect back to listings after successful deletion.
-    res.redirect('/listings');
-}));
-
-// Show route: display one listing by MongoDB ObjectId.
-app.get('/listings/:id', wrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
-
-    // Return 404 if ID exists in format but no document is found.
-    if (!listing) {
-        return res.status(404).send('Listing not found');
-    }
-
-    res.render('show', {
-        listing,
-        navAction: `<a class="edit-link" href="/listings/${listing._id}/edit">Edit property</a><a class="back-link" href="/listings">Back to listings</a>`
-    });
-}));
+// Mount review routes (nested under listings).
+app.use('/listings/:id/reviews', reviewRouter);
+app.use('/', userRouter);
 
 // app.get('/listings', async (req, res) => {
 //     try {

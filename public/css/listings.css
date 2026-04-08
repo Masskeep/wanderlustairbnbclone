@@ -35,6 +35,55 @@ body {
   border-bottom: 1px solid #e8decf;
 }
 
+.flash-wrap {
+  max-width: 1200px;
+  margin: 14px auto 0;
+  padding: 0 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.flash-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+
+  .auth-actions {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  border-radius: 12px;
+  border: 1px solid;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.flash-success {
+  background: #eaf9ef;
+  border-color: #9bd9ad;
+  color: #1f7a3a;
+}
+
+.flash-error {
+  background: #fff2f4;
+  border-color: #f3b7c3;
+  color: #a72643;
+}
+
+.flash-close {
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* Inner layout wrapper for header content. */
 .topbar-inner {
   max-width: 1200px;
@@ -83,6 +132,25 @@ body {
   box-shadow: 0 12px 20px rgba(255, 56, 92, 0.28);
 }
 
+.ghost-btn {
+  text-decoration: none;
+  color: var(--brand);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid #f2c6cf;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 16px rgba(25, 21, 14, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.ghost-btn:hover {
+  transform: translateY(-1px);
+  border-color: #ff8aa1;
+  box-shadow: 0 12px 20px rgba(25, 21, 14, 0.1);
+}
+
 /* Small gradient badge containing W letter. */
 .brand-badge {
   width: 28px;
@@ -122,6 +190,13 @@ body {
   background: #fff;
   border: 1px solid #ebdfce;
   font-size: 0.9rem;
+}
+
+.auth-actions {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 /* Shared content wrapper below hero. */
@@ -297,6 +372,16 @@ body {
   box-shadow: 0 12px 20px rgba(255, 56, 92, 0.28);
 }
 
+.auth-switch {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 /* Entry animation used by hero and cards/forms. */
 @keyframes reveal {
   from {
@@ -347,6 +432,11 @@ body {
   }
 
   .create-btn {
+    padding: 9px 12px;
+    font-size: 0.82rem;
+  }
+
+  .ghost-btn {
     padding: 9px 12px;
     font-size: 0.82rem;
   }

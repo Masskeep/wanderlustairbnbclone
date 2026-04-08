@@ -1,6 +1,16 @@
 // Apply custom validation on all forms that contain required controls.
 // This gives us consistent error UX across browsers (instead of native tooltips).
 document.addEventListener("DOMContentLoaded", () => {
+	// Allow users to dismiss flash notifications manually.
+	document.querySelectorAll(".flash-close").forEach((button) => {
+		button.addEventListener("click", () => {
+			const flash = button.closest(".flash-alert");
+			if (flash) {
+				flash.remove();
+			}
+		});
+	});
+
 	const forms = document.querySelectorAll("form");
 
 	forms.forEach((form) => {

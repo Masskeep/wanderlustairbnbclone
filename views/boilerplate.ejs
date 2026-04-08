@@ -42,6 +42,23 @@
 		</div>
 	</header>
 
+	<% if ((success && success.length) || (error && error.length)) { %>
+		<section class="flash-wrap">
+			<% (success || []).forEach((msg) => { %>
+				<div class="flash-alert flash-success" role="alert">
+					<span><%= msg %></span>
+					<button type="button" class="flash-close" aria-label="Close notification">&times;</button>
+				</div>
+			<% }) %>
+			<% (error || []).forEach((msg) => { %>
+				<div class="flash-alert flash-error" role="alert">
+					<span><%= msg %></span>
+					<button type="button" class="flash-close" aria-label="Close notification">&times;</button>
+				</div>
+			<% }) %>
+		</section>
+	<% } %>
+
 	<!-- Page-specific content goes here -->
 	<%- body %>
 

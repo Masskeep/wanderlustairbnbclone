@@ -7,6 +7,15 @@
 		<h1>Find your next stay</h1>
 		<p>Live listings pulled directly from your MongoDB database.</p>
 		<span class="count-pill"><%= listings.length %> places available</span>
+		<div class="auth-actions">
+			<% if (currentUser) { %>
+				<span class="count-pill">Signed in as <%= currentUser.username %></span>
+				<a class="ghost-btn" href="/logout">Sign Out</a>
+			<% } else { %>
+				<a class="create-btn" href="/signup">Sign Up</a>
+				<a class="ghost-btn" href="/login">Log In</a>
+			<% } %>
+		</div>
 	</section>
 
 	<!-- Main content: either empty-state or card grid -->

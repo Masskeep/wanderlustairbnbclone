@@ -1,0 +1,31 @@
+<% layout('boilerplate') %>
+<% pageTitle = 'Login | WanderLust' %>
+<% pageStyle = 'listings.css' %>
+
+<section class="hero">
+	<h1>Welcome Back to WanderLust</h1>
+	<p>Sign in to continue exploring, booking, and managing your trips.</p>
+	<span class="count-pill">Good to see you again</span>
+</section>
+
+<main class="grid-wrap">
+	<section class="form-shell">
+		<form class="listing-form" action="/login" method="POST">
+			<div class="form-row">
+				<label for="username">Username</label>
+				<input id="username" name="username" type="text" placeholder="traveler_01" required />
+			</div>
+
+			<div class="form-row">
+				<label for="password">Password</label>
+				<input id="password" name="password" type="password" placeholder="Enter your password" required />
+			</div>
+
+			<button class="submit-btn" type="submit">Log In</button>
+		</form>
+		<div class="auth-switch">
+			<span>New to WanderLust?</span>
+			<a class="ghost-btn" href="/signup">Sign Up</a>
+		</div>
+	</section>
+</main>
